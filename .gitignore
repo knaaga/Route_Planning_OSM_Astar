@@ -1,8 +1,8 @@
 *.swp
-*.osm
 *.o
 draw.cpp
 test.cpp
-build/
+build_vs/
 bin/
 lib/
+Compiling in Windows.docx
