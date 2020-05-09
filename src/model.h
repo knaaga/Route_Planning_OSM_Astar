@@ -5,6 +5,8 @@
 #include <string>
 #include <cstddef>
 
+
+// The model class contains data structures to store the OpenStreetMap data
 class Model
 {
 public:
@@ -44,10 +46,13 @@ public:
         Type type;
     };
     
+    // Model constructor - accepts a vector of bytes representing the xml data
     Model( const std::vector<std::byte> &xml );
     
+    // To convert node x and y coordinates from latitude and longitude to distance in meters
     auto MetricScale() const noexcept { return m_MetricScale; }    
     
+    // Public functions to return the data stored in the model
     auto &Nodes() const noexcept { return m_Nodes; }
     auto &Ways() const noexcept { return m_Ways; }
     auto &Roads() const noexcept { return m_Roads; }
@@ -58,10 +63,16 @@ public:
     auto &Railways() const noexcept { return m_Railways; }
     
 private:
+    // Converts lat/lon data to meters
     void AdjustCoordinates();
+
+    // Takes OSM multipolygon data and stores it in the model
     void BuildRings( Multipolygon &mp );
+
+    // Function that takes in the data and reads it into all of the objects into the model
     void LoadData(const std::vector<std::byte> &xml);
     
+    // Model data stored in private vectors. These are vectors of struct objects
     std::vector<Node> m_Nodes;
     std::vector<Way> m_Ways;
     std::vector<Road> m_Roads;

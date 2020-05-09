@@ -6,6 +6,8 @@
 
 using namespace std::experimental;
 
+
+// Render class helps render the data - shapes, colors, etc.
 class Render
 {
 public:

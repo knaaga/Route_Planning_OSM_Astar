@@ -6,6 +6,7 @@
 #include <algorithm>
 #include <assert.h>
 
+// Two helper functions that convert OSM strings to enum types
 static Model::Road::Type String2RoadType(std::string_view type)
 {
     if( type == "motorway" )        return Model::Road::Motorway;
@@ -37,17 +38,23 @@ static Model::Landuse::Type String2LanduseType(std::string_view type)
     return Model::Landuse::Invalid;
 }
 
+
+// Model constructor definition
 Model::Model( const std::vector<std::byte> &xml )
 {
+    // Data is loaded
     LoadData(xml);
 
+    // Coordinates are adjusted
     AdjustCoordinates();
 
+    // Road vector is sorted
     std::sort(m_Roads.begin(), m_Roads.end(), [](const auto &_1st, const auto &_2nd){
         return (int)_1st.type < (int)_2nd.type; 
     });
 }
 
+// Reading in OSM data and storing the various model elements in vectors and structs
 void Model::LoadData(const std::vector<std::byte> &xml)
 {
     using namespace pugi;
@@ -175,6 +182,7 @@ void Model::LoadData(const std::vector<std::byte> &xml)
     }
 }
 
+// Converts latitude and longitude to meters (distance from 0,0)
 void Model::AdjustCoordinates()
 {    
     const auto pi = 3.14159265358979323846264338327950288;
@@ -193,6 +201,7 @@ void Model::AdjustCoordinates()
     }
 }
 
+// Three helper functions that read data into the model
 static bool TrackRec(const std::vector<int> &open_ways,
                      const Model::Way *ways,
                      std::vector<bool> &used,

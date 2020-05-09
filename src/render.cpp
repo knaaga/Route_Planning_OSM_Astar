@@ -13,6 +13,7 @@ Render::Render( RouteModel &model ):
     BuildLanduseBrushes();
 }
 
+// Display the various graphic objects
 void Render::Display( io2d::output_surface &surface )
 {
     m_Scale = static_cast<float>(std::min(surface.dimensions().x(), surface.dimensions().y()));    
@@ -27,6 +28,8 @@ void Render::Display( io2d::output_surface &surface )
     DrawRailways(surface);
     DrawHighways(surface);    
     DrawBuildings(surface);  
+
+    // Three custom functions to display the start and end positions and the path obtained from the A* search
     DrawPath(surface);
     DrawStartPosition(surface);   
     DrawEndPosition(surface);
